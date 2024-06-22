@@ -22,7 +22,7 @@ import (
 )
 
 func main() {
-	db, err := sql.Open("mysql", "test_user:test_password@tcp(localhost:3306)/test_db")
+	db, err := sql.Open("mysql", "test_user:test_password@tcp(golang-mysql:3306)/test_db")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -36,8 +36,8 @@ func main() {
 
 	// URLs base específicas para cada parceiro
 	partnerBaseURLs := map[int]string{
-		1: "http://localhost:9000/api1",
-		2: "http://localhost:9000/api2",
+		1: "http://host.docker.internal:8000/partner1",
+		2: "http://host.docker.internal:8000/partner2",
 	}
 
 	listEventsUseCase := usecase.NewListEventsUseCase(eventRepo)

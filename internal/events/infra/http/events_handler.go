@@ -123,19 +123,18 @@ func (h *EventsHandler) CreateEvent(w http.ResponseWriter, r *http.Request) {
 // @Failure 500 {object} string
 // @Router /checkout [post]
 func (h *EventsHandler) BuyTickets(w http.ResponseWriter, r *http.Request) {
-	// como os dados vem da requisição
 	var input usecase.BuyTicketsInputDTO
 	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	// se os dados estao corretos ele compra o ticket
+
 	output, err := h.buyTicketsUseCase.Execute(input)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	// se a compra for bem sucedida ele retorna o output transformando em json
+
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(output)
 }
